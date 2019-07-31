@@ -2,13 +2,12 @@ from bs4 import BeautifulSoup
 import requests
 import urllib.parse
 
-home_url = "https://teonite.com/blog/"
 
 class Scraper:
     def __init__(self, base_url):
         self.base_url = base_url
-        self.pages = self.get_pages()
-        self.posts = self.get_posts()
+        self.pages_urls = self.get_pages()
+        self.posts_urls = self.get_posts_urls()
 
     def get_pages(self):
         urls = [self.base_url]
@@ -23,9 +22,9 @@ class Scraper:
                 break
         return urls
 
-    def get_posts(self):
+    def get_posts_urls(self):
         urls = []
-        for page in self.pages:
+        for page in self.pages_urls:
             result = requests.get(page)
             c = result.content
             soup = BeautifulSoup(c, features="lxml")
@@ -43,18 +42,20 @@ class Scraper:
 
         return joined_urls
 
-    def get_posts_content(self):
+    def get_posts(self):
         posts_content = []
-        for post in self.posts:
-            result = requests.get(post)
+        for post_url in self.posts_urls:
+            result = requests.get(post_url)
             c = result.content
             soup = BeautifulSoup(c, features="lxml")
-            samples = soup.find_all("div", "post-content")
-            posts_content.append(samples[0].text)
-            print(samples[0].text)
+            post = soup.find_all("div", "post-content")[0].text
+            author = soup.find_all("span", "author-name")[0].text
+            posts_content.append((post, author))
         return posts_content
 
 
+
+
 post_url = "https://teonite.com/blog/"
-scrapper = Scrapper(post_url)
-scrapper.get_posts_content()
+scrapper = Scraper(post_url)
+print(scrapper.get_posts()[2])
