@@ -49,14 +49,8 @@ class Scraper:
             result = requests.get(post_url)
             c = result.content
             soup = BeautifulSoup(c, features="lxml")
-            post = soup.find_all("div", "post-content")[0].text
+            post = soup.find_all("div", "post-content")[0].text.replace('\n','')
             author = soup.find_all("span", "author-name")[0].text
             posts_content.append((post, author))
         return posts_content
 
-
-
-
-post_url = "https://teonite.com/blog/"
-scrapper = Scraper(post_url)
-print(scrapper.get_posts()[2])
