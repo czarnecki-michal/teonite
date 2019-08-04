@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup
 import requests
 import urllib.parse
-
+import unidecode
 
 
 class Scraper:
@@ -51,6 +51,13 @@ class Scraper:
             soup = BeautifulSoup(c, features="lxml")
             post = soup.find_all("div", "post-content")[0].text.replace('\n','')
             author = soup.find_all("span", "author-name")[0].text
-            posts_content.append((post, author))
+            posts_content.append((post, (transform_name(author), author)))
         return posts_content
+
+
+def transform_name(name):
+    name = unidecode.unidecode(name.lower()).replace(" ", "")
+    return name
+
+
 
