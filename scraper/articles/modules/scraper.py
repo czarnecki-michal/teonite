@@ -2,6 +2,11 @@ from bs4 import BeautifulSoup
 import requests
 import urllib.parse
 import unidecode
+import logging
+
+
+logger = logging.getLogger(__name__)
+logging.basicConfig(level=logging.INFO)
 
 
 class Scraper:
@@ -21,20 +26,29 @@ class Scraper:
                 urls.append(page_url)
             else:
                 break
+        logger.info(f"Found {len(urls)} pages.")
         return urls
 
     def get_posts_urls(self):
         urls = []
         for page in self.pages_urls:
             result = requests.get(page)
-            c = result.content
-            soup = BeautifulSoup(c, features="lxml")
-            samples = soup.find_all("h2", "post-title")
+            if result.status_code == requests.codes.ok:
+                c = result.content
+                soup = BeautifulSoup(c, features="lxml")
+                samples = soup.find_all("h2", "post-title")
 
-            for sample in samples:
-                a = sample.find("a")
-                urls.append(a.get("href"))
-        return self.create_urls(urls)
+                for sample in samples:
+                    a = sample.find("a")
+                    urls.append(a.get("href"))
+            else:
+                raise ConnectionError("URL is not responding.")
+
+        if urls:
+            logger.info(f"Found {len(urls)} articles.")
+            return self.create_urls(urls)
+        else:
+            logger.error("No articles found.")
 
     def create_urls(self, relative_urls):
         joined_urls = []
@@ -47,12 +61,17 @@ class Scraper:
         posts_content = []
         for post_url in self.posts_urls:
             result = requests.get(post_url)
-            c = result.content
-            soup = BeautifulSoup(c, features="lxml")
-            post = soup.find_all("div", "post-content")[0].text.replace('\n','')
-            author = soup.find_all("span", "author-name")[0].text
-            posts_content.append((post, (transform_name(author), author)))
+            if result.status_code == requests.codes.ok:
+                c = result.content
+                soup = BeautifulSoup(c, features="lxml")
+                post = soup.find_all("div", "post-content")[0].text.replace('\n','')
+                author = soup.find_all("span", "author-name")[0].text
+                posts_content.append((post, (transform_name(author), author)))
+            else:
+                raise ConnectionError("URL is not responding.")
+
         return posts_content
+
 
 
 def transform_name(name):

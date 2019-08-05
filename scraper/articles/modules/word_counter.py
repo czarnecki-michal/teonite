@@ -3,12 +3,14 @@ from nltk.corpus import stopwords
 
 
 def remove_stopwords(text):
-    tokenizer = RegexpTokenizer(r'\w+')
-    no_punctuation = tokenizer.tokenize(text.lower())
-    text = stopwords.words('english')
-    result = [i for i in no_punctuation if i not in text]
-
-    return result
+    if isinstance(text, str):
+        tokenizer = RegexpTokenizer(r'\w+')
+        no_punctuation = tokenizer.tokenize(text.lower())
+        text = stopwords.words('english')
+        result = [i for i in no_punctuation if i not in text]
+        return result
+    else:
+        raise TypeError("Input datatype must be a string.")
 
 
 def map_book(text):
