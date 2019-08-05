@@ -25,6 +25,8 @@ SECRET_KEY = '0keg$qdxm_6q!+%e4&0jp954c$^lzew9^5ipwdt(#*z(zkaqj3'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+DOCKER = True
+
 ALLOWED_HOSTS = ["*"]
 
 
@@ -75,16 +77,25 @@ WSGI_APPLICATION = 'scraper.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'scraper',
-        'USER': 'postgres',
-        'PASSWORD': 'postgres',
-        'HOST': 'localhost',
-        'PORT': '5433',
+
+if DOCKER:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'postgres',
+            'USER': 'postgres',
+            'HOST': 'db',
+            'PORT': 5432,
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
+    }
+
 
 
 # Password validation
