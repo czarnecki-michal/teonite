@@ -2,7 +2,7 @@ from rest_framework import generics
 from articles.models import Article
 from articles.models import Author
 from articles.serializers import ArticleSerializer
-from articles.word_counter import compute_stats
+from articles.modules.word_counter import compute_stats
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 import operator
