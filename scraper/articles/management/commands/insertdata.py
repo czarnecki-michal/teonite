@@ -1,4 +1,4 @@
-from django.core.management.base import BaseCommand, CommandError
+from django.core.management.base import BaseCommand
 from articles.models import Author, Article
 from articles.modules.scraper import Scraper
 import logging
@@ -23,12 +23,11 @@ class Command(BaseCommand):
                 name=author[1]
             )
             if created:
-                new_articles += 1
+                new_authors += 1
             obj, created = Article.objects.update_or_create(
                 text=post,
                 author_id=Author.objects.get(id=author[0])
             )
             if created:
-                new_authors += 1
-        
+                new_articles += 1    
         logger.info(f"Inserted {new_articles} new articles and {new_authors} new authors")
