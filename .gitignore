@@ -9,6 +9,7 @@ db.sqlite3
 media
 .ideas
 .vscode
+.pylintrc
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
