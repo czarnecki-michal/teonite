@@ -1,13 +1,14 @@
+import collections
+import operator
+
 from rest_framework import generics
-from articles.models import Article
-from articles.models import Author
-from articles.serializers import ArticleSerializer
-from articles.modules.word_counter import compute_stats
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-import operator
-import collections
 from rest_framework.views import APIView
+
+from articles.models import Article, Author
+from articles.modules.word_counter import compute_stats
+from articles.serializers import ArticleSerializer
 
 
 class ArticleList(generics.ListCreateAPIView):
