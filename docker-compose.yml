@@ -5,10 +5,10 @@ services:
   web:
     build: .
     command:
-      bash -c "python scraper/manage.py migrate --no-input && python scraper/manage.py runserver 0.0.0.0:8001"
+      bash -c "python scraper/manage.py migrate --no-input && python scraper/manage.py runserver 0.0.0.0:8080"
     volumes:
       - .:/scraper
     ports:
-      - "8001:8001"
+      - "8080:8080"
     depends_on:
       - db
