@@ -1,5 +1,5 @@
 from django.test import TestCase
-from articles.models import Author
+from articles.models import Author, Article
 from articles.modules import word_counter
 
 
@@ -42,7 +42,7 @@ class CounterTestCase(TestCase):
         Tests if TypeError is raised
         """
 
-        wrong_type = list("As we all know a picture")
+        wrong_type = ["test", "type", "error"]
         self.assertRaises(TypeError, word_counter.remove_stopwords, wrong_type)
 
     def test_map_words(self):
@@ -55,6 +55,19 @@ class CounterTestCase(TestCase):
         result = word_counter.map_words(words)
         correct = {"know": 1, "picture": 3, "let": 1, "enhanced": 2, "pictures": 1, "speak": 3}
         self.assertEqual(result, correct)
+
+    def test_get_stats_type(self):
+        """
+        Tests if TypeError is raised
+        """
+
+        a_list = ["test", "type", "error"]
+        self.assertRaises(TypeError, word_counter.get_stats, a_list)
+        self.assertRaises(TypeError, word_counter.get_stats, None)
+        correct_type = [Article(text="test", author_id=Author(id="Test Test", name="testtest"))]
+        self.assertEqual(word_counter.get_stats(correct_type), {"test": 1})
+
+
 
 
 # class ScraperTestCase(TestCase):
