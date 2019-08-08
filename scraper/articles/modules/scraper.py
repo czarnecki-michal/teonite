@@ -95,7 +95,7 @@ class Scraper:
             if result.status_code == 200:
                 c = result.content
                 soup = BeautifulSoup(c, features="lxml")
-                post = soup.find_all("div", "post-content")[0].text.replace('\n','')
+                post = soup.find_all("div", "post-content")[0].text.replace('\n', '')
                 author = soup.find_all("span", "author-name")[0].text
                 posts_content.append((post, (transform_name(author), author)))
             else:

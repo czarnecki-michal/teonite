@@ -1,8 +1,15 @@
+import collections
+import logging
+import operator
+
 from nltk.corpus import stopwords
 from nltk.tokenize import RegexpTokenizer
 
+logger = logging.getLogger(__name__)
+logging.basicConfig(level=logging.INFO)
 
-def remove_stopwords(text, language="english"):
+
+def remove_stopwords(text: str, language="english"):
     """Removes stopwords and punctuation from text
     Arguments:
         text {string} -- text
@@ -19,7 +26,7 @@ def remove_stopwords(text, language="english"):
         raise TypeError("Input variable datatype must be a string.")
 
 
-def map_words(text):
+def map_words(text: list):
     """Maps words with how much it occurres in text
     Arguments:
         text {list} -- a list of strings
@@ -39,7 +46,7 @@ def map_words(text):
     return None
 
 
-def compute_stats(text, language="english"):
+def compute_stats(text: str, language="english"):
     """Removes stopwords and maps word with number of occurrences in text
     Arguments:
         text {string} -- text
@@ -55,6 +62,38 @@ def compute_stats(text, language="english"):
                 word_list.append(word)
         word_map = map_words(words)
     else:
-        raise TypeError("Input variable datatype must be a string.")
+        raise TypeError("compute_stats() input variable datatype must be a string.")
 
     return word_map
+
+
+def get_stats(articles):
+    """Returns dictionary with computed stats for list of articles
+    Arguments:
+        articles {Article} -- list of articles
+    Returns:
+        dictionary -- words and their occurrences in text for
+                      each article
+    """
+    words = {}
+    try:
+        for article in articles:
+            if type(article).__name__ == "Article":
+                article_stats = compute_stats(article.text)
+
+                for word in article_stats:
+                    if word not in words:
+                        words[word] = article_stats[word]
+                    elif word in words:
+                        words[word] += article_stats[word]
+            else:
+                logger.error("get_stats() input variable type must be a list of Article objects")
+                raise TypeError("get_stats() input variable type must be a list of Article objects")
+    except TypeError:
+        logger.error("get_stats() input variable type must be a list")
+        raise
+
+
+    data = sorted(words.items(), key=operator.itemgetter(1), reverse=True)[:10]
+    sorted_dict = collections.OrderedDict(data)
+    return sorted_dict
