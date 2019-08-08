@@ -2,7 +2,7 @@ from nltk.corpus import stopwords
 from nltk.tokenize import RegexpTokenizer
 
 
-def remove_stopwords(text):
+def remove_stopwords(text, language="english"):
     """Removes stopwords and punctuation from text
     Arguments:
         text {string} -- text
@@ -12,7 +12,7 @@ def remove_stopwords(text):
     if isinstance(text, str):
         tokenizer = RegexpTokenizer(r'\w+')
         no_punctuation = tokenizer.tokenize(text.lower())
-        text = stopwords.words('english')
+        text = stopwords.words(language)
         result = [i for i in no_punctuation if i not in text]
         return result
     else:
@@ -20,7 +20,7 @@ def remove_stopwords(text):
 
 
 def map_words(text):
-    """Maps words with how much it occurres in text 
+    """Maps words with how much it occurres in text
     Arguments:
         text {list} -- a list of strings
     Returns:
@@ -39,7 +39,7 @@ def map_words(text):
     return None
 
 
-def compute_stats(text):
+def compute_stats(text, language="english"):
     """Removes stopwords and maps word with number of occurrences in text
     Arguments:
         text {string} -- text
@@ -48,7 +48,7 @@ def compute_stats(text):
     """
 
     if text and isinstance(text, str):
-        words = remove_stopwords(text)
+        words = remove_stopwords(text, language)
         word_list = []
         for word in words:
             if word not in word_list:
