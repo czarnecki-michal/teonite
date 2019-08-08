@@ -1,11 +1,12 @@
 version: "3.3"
 services:
   db:
-    image: postgres
+    image: postgres:9.6
   web:
     build: .
-    command:
-      bash -c "python scraper/manage.py migrate --no-input && python scraper/manage.py runserver 0.0.0.0:8080"
+    entrypoint: 
+      - /bin/sh
+      - ./start.sh
     volumes:
       - .:/scraper
     ports:
