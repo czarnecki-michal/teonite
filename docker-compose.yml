@@ -1,6 +1,8 @@
 version: "3.3"
 
 services:
+  db:
+    image: postgres
   web:
     build: .
     container_name: scraper
@@ -8,5 +10,3 @@ services:
       - "8080:8080"
     links:
       - db
-  db:
-    image: postgres
