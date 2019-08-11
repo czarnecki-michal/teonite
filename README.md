@@ -72,18 +72,9 @@ Uses **BeautifulSoup** for website scraping and **Requests** libraries.
 * These statistics are calculated when user visits `/stats` or `/stats/<author>`.
 
 
-## PostgreSQL database.
+## PostgreSQL database
 
 * Database is based on postgres docker image.
 * There are two tables (based on django models) created by running django migrations:
     * `authors` - with two columns: `id` and `name`, with `id` being the primary key.
     * `articles` - with three columns: `id`, `text` and `author_id`, with `id` being the    primary key, `text` contains article's content and `author_id` is foreign key to `authors` table. 
-
-
-It returns
-
-| Route              | Method | Description                           |   |   |
-|--------------------|--------|---------------------------------------|---|---|
-| /stats/            | GET    | Get general stats                     |   |   |
-| /stats/<author>/   | GET    | Get stats for specified author        |   |   |
-| /authors           | GET    | Get all authors and their identifiers |   |   |
