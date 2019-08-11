@@ -1,0 +1,9 @@
+image: docker:stable
+
+stages:
+  - build image
+
+docker build:
+  stage: build image
+  script:
+    - docker build -t scraper .
