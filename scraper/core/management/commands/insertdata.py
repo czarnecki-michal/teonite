@@ -2,8 +2,8 @@ import logging
 
 from django.core.management.base import BaseCommand
 
-from articles.modules.scraper import Scraper
-from articles.models import Article, Author
+from core.modules.scraper import Scraper
+from core.models import Article, Author
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)

@@ -16,6 +16,7 @@ def remove_stopwords(text: str, language="english"):
     Returns:
         list -- list of words without stopwords and punctuation
     """
+
     if isinstance(text, str):
         tokenizer = RegexpTokenizer(r'\w+')
         no_punctuation = tokenizer.tokenize(text.lower())

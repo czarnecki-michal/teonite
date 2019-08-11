@@ -97,14 +97,14 @@ class Scraper:
                 soup = BeautifulSoup(c, features="lxml")
                 post = soup.find_all("div", "post-content")[0].text.replace('\n', '')
                 author = soup.find_all("span", "author-name")[0].text
-                posts_content.append((post, (transform_name(author), author)))
+                posts_content.append((post, (get_author_id(author), author)))
             else:
                 raise ConnectionError("URL is not responding.")
 
         return posts_content
 
 
-def transform_name(name):
+def get_author_id(name):
     """Makes text lower case, converts unicode characters and removes space
     Arguments:
         name {string} -- a name

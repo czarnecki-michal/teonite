@@ -8,6 +8,3 @@ class Author(models.Model):
 class Article(models.Model):
     text = models.TextField()
     author_id = models.ForeignKey(Author, on_delete=models.CASCADE, default=None)
-
-
-

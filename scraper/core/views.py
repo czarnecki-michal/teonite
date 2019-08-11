@@ -3,19 +3,9 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from articles.models import Article, Author
-from articles.modules.word_counter import get_stats
-from articles.serializers import ArticleSerializer
-
-
-class ArticleList(generics.ListCreateAPIView):
-    queryset = Article.objects.all()
-    serializer_class = ArticleSerializer
-
-
-class ArticleDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Article.objects.all()
-    serializer_class = ArticleSerializer
+from core.models import Article, Author
+from core.modules.word_counter import get_stats
+from core.serializers import ArticleSerializer
 
 
 class AuthorList(APIView):

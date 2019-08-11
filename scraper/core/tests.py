@@ -1,6 +1,6 @@
 from django.test import TestCase
-from articles.models import Author, Article
-from articles.modules import word_counter
+from core.models import Author
+from core.modules import word_counter
 
 
 class AuthorTestCase(TestCase):
@@ -66,10 +66,3 @@ class CounterTestCase(TestCase):
         self.assertRaises(TypeError, word_counter.get_stats, None)
         correct_type = [Article(text="test", author_id=Author(id="Test Test", name="testtest"))]
         self.assertEqual(word_counter.get_stats(correct_type), {"test": 1})
-
-
-
-
-# class ScraperTestCase(TestCase):
-#     def test_object_constructions(self):
-#         pass
