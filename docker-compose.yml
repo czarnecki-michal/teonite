@@ -1,15 +1,12 @@
 version: "3.3"
+
 services:
-  db:
-    image: postgres:9.6
   web:
     build: .
-    entrypoint: 
-      - /bin/sh
-      - ./start.sh
-    volumes:
-      - .:/scraper
+    container_name: scraper
     ports:
       - "8080:8080"
-    depends_on:
+    links:
       - db
+  db:
+    image: postgres
