@@ -2,8 +2,16 @@ image: docker:stable
 
 stages:
   - build image
+  - push to dockerhub
 
 docker build:
   stage: build image
   script:
-    - docker build -t scraper .
+    - docker info
+    - docker build -t $REGISTRY_USER/scraper ./scraper
+
+docker push:
+  stage: push to dockerhub
+  script:
+    - echo $REGISTRY_PASSWORD | docker login -u $REGISTRY_USER --password-stdin
+    - docker push $REGISTRY_USER/scraper
