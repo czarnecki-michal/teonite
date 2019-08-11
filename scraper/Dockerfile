@@ -4,7 +4,7 @@ RUN apt-get update && \
     apt-get autoremove -y && \
     mkdir -p /scraper
 WORKDIR /scraper
-ADD /requirements.txt /scraper/
+ADD requirements.txt /scraper/
 RUN pip install -r requirements.txt
 ADD . /scraper/
 EXPOSE 8000
