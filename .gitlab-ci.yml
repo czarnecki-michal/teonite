@@ -8,7 +8,7 @@ docker build:
   stage: build image
   script:
     - docker info
-    - docker build -t scraper ./scraper
+    - docker build -t $REGISTRY_USER/scraper ./scraper
 
 docker push:
   stage: push to dockerhub
