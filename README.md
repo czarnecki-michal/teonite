@@ -81,6 +81,6 @@ Uses **BeautifulSoup** for website scraping and **Requests** libraries.
 
 # GitLab CI
 
-In order to use GitLab CI runner it has to be turned locally navigating to `gitlab-runner` directory and run command:
+In order to use GitLab CI runner it has to be turned locally - navigate to `gitlab-runner` directory and run command:
 `docker-compose up -d`
 One stage defined in `.gitlab-ci.yml` build docker image and other pushes it to DockerHub.
