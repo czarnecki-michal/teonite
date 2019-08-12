@@ -15,20 +15,16 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '0keg$qdxm_6q!+%e4&0jp954c$^lzew9^5ipwdt(#*z(zkaqj3'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-DOCKER = True
-
-ALLOWED_HOSTS = ["*"]
-
+# environmental variables
+DB_NAME = os.environ.get('DB_NAME', '')
+DB_HOST = os.environ.get('DB_HOST', '')
+DB_USER = os.environ.get('DB_USER', '')
+DB_PASSWORD = os.environ.get('DB_PASSWORD', '')
+DB_PORT = os.environ.get('DB_PORT', '')
+ALLOWED_HOST = os.environ.get('ALLOWED_HOST', '')
+ALLOWED_HOSTS = [ALLOWED_HOST]
+DEBUG = os.environ.get('DEBUG', '')
+SECRET_KEY = os.environ.get('SECRET_KEY', '')
 
 # Application definition
 
@@ -78,23 +74,16 @@ WSGI_APPLICATION = 'api.wsgi.application'
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
 
-if DOCKER:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': 'postgres',
-            'USER': 'postgres',
-            'HOST': 'db',
-            'PORT': 5432,
-        }
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': DB_NAME,
+        'USER': DB_USER,
+        'HOST': DB_HOST,
+        'PORT': DB_PORT,
     }
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-        }
-    }
+}
 
 
 

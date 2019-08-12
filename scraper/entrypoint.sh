@@ -1,5 +1,4 @@
 #!/bin/bash
-cd ./scraper
 python manage.py migrate
 python manage.py makemigrations core
 python manage.py migrate core
