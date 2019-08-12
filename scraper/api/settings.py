@@ -23,7 +23,7 @@ DB_PASSWORD = os.environ.get('DB_PASSWORD', '')
 DB_PORT = os.environ.get('DB_PORT', '')
 ALLOWED_HOST = os.environ.get('ALLOWED_HOST', '')
 ALLOWED_HOSTS = [ALLOWED_HOST]
-DEBUG = os.environ.get('DEBUG', '')
+DEBUG = True
 SECRET_KEY = os.environ.get('SECRET_KEY', '')
 
 # Application definition
